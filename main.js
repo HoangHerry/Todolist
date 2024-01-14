@@ -76,6 +76,7 @@ tabs.forEach((tab, index) => {
 })
 
 function Render(arrList) {
+    console.log(arrList)
     listTask.innerHTML = arrList.map((item) => {
         if(item.done == true){
             return `
@@ -129,44 +130,61 @@ function Render(arrList) {
             
         }
 
-        btnTrash.addEventListener('click', TrashHandle)      
-        btnEdit.addEventListener('click', (e) => {
-            const btnSaveHandler = () => {
-                arrList[index].name = formEdit_nameTask.value
-                arrList[index].done = formEdit_status.checked
-                formEdit.classList.remove('display')
-                formApp.classList.remove('test')
-                if(btnUnDone.classList.contains("active")){
-                    saveTabbedArray(false)
-
-                }
-                else if(btnDone.classList.contains("active")){
-                    saveTabbedArray(true)
-                }
-                else {
-                    Render(todoList)
+        btnTrash.addEventListener('click', TrashHandle) 
+        let EditHandle = (event) => {
+            event.stopPropagation();
+            let btnSaveHandler = () => {
+                arrList[index].name = formEdit_nameTask.value;
+                arrList[index].done = formEdit_status.checked;
+                formEdit.classList.remove('display');
+                formApp.classList.remove('test');
+                if (btnUnDone.classList.contains("active")) {
+                    saveTabbedArray(false);
+                } else if (btnDone.classList.contains("active")) {
+                    saveTabbedArray(true);
+                } else {
+                    Render(todoList);
                 }
                 formEdit_btnsave.removeEventListener('click', btnSaveHandler);
             };
-            const btnCloseHandler = () => {
+        
+            let btnCloseHandler = () => {
+                formEdit.classList.remove('display');
+                formApp.classList.remove('test');
+                Render(arrList);
                 formEdit_close.removeEventListener('click', btnCloseHandler);
-                formEdit.classList.remove('display')
-                formApp.classList.remove('test')
-                Render(arrList)
-                formEdit_close.removeEventListener('click', btnCloseHandler);
+                formEdit_btnsave.removeEventListener('click', btnSaveHandler); 
             };
+
+            
+
+            
+        
             formEdit_close.addEventListener('click', btnCloseHandler);
-            formEdit_btnsave.addEventListener('click', btnSaveHandler);    
-            formEdit.classList.toggle('display');
-            formApp.classList.toggle('test')
+            formEdit_btnsave.addEventListener('click', btnSaveHandler);
+        
+            formEdit.classList.add('display');
+            formApp.classList.add('test');
             formEdit_nameTask.value = arrList[index].name;
             formEdit_status.checked = arrList[index].done;
 
-        });  
+            let outsideClickHandler = (event) => {
+                if (!formEdit.contains(event.target)) {
+                    formEdit.classList.remove('display');
+                    formApp.classList.remove('test');
+                    Render(arrList);
+                    btnEdit.removeEventListener('click', EditHandle);
+                    document.removeEventListener('mousedown', outsideClickHandler);
+                    formEdit_close.removeEventListener('click', btnCloseHandler);
+                    formEdit_btnsave.removeEventListener('click', btnSaveHandler);
+                }
+            };
+            document.addEventListener('click', outsideClickHandler);
+        };
+        btnEdit.addEventListener('click', EditHandle);
+          
 
-        
-        
-        
+
 });
 }
 
