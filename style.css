@@ -1,0 +1,415 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pacifico', cursive;
+    font-family: 'Roboto', sans-serif;
+}
+html{
+    background: linear-gradient(-45deg, #D000F7, #24BAE3);
+    height: 100%;
+    width: 100%;
+    
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+#app{
+    background-color: rgb(17, 24, 39);
+    color: rgb(182, 181, 181);
+    width: 70%;
+    padding: 100px 120px;
+    border-radius: 15px; 
+    min-height: 300px;
+}
+
+#app.test{
+    width: 60%;
+    transform: translateX(200px);
+    animation: moveIn_app 0.5s ease-in-out;
+}
+@keyframes moveIn_app {
+    from {
+        transform: translateX(0px);
+        width: 70%;
+    }
+    to{
+        width: 60%;
+        transform: translateX(200px);
+    }
+}
+
+#menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+}
+#menu--left{
+    width: 40%;
+    height: 100%;
+}
+#menu--right{
+    width: 60%;
+    height: 100%;
+}
+#menu--left, #menu_list--tool{
+    display: flex;
+    align-items: center;
+}
+#menu--left i{
+    font-size: xx-large;
+    margin-right: 8px;
+    
+}
+#menu--left h1{
+    letter-spacing: -1.8px !important;
+}
+#menu_list--tool{
+    list-style: none;
+    justify-content: end;
+    width: 100%;
+    height: 100%;
+}
+.menu_tool--item{
+    height: 100%;
+    padding: 0 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border-radius: 5px;
+    margin-left: 18px;
+}
+.menu_tool--item:hover{
+    cursor: pointer;
+}
+.menu_tool--item.active{
+    background: linear-gradient(-45deg, #D000F7, #24BAE3);
+    box-shadow: 1.5px 4px 10px rgba(208, 0, 247, 0.7)
+
+}
+#app_add{
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+#app_add input{
+    width: 70%;
+    height: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #D000F7;
+    background-color: rgb(17, 24, 39);
+    outline: none;
+    color: whitesmoke;
+    box-shadow: inset -5px -5px 10px #2f3033, inset 5px 5px 10px #131212;
+    font-weight: 500;
+    padding-left: 20px;
+}
+#app_add button{
+    background-color: rgb(17, 24, 39);
+    width: 20%;
+    border-radius: 7px;
+    border: none;
+    font-size: large;
+    font-weight: 500;
+    box-shadow: inset -5px -5px 10px #2f3033, inset 5px 5px 10px #131212;
+    color: rgb(182, 181, 181);  
+}
+#app_add button:hover{
+    cursor: pointer;
+}
+#app_taskList{
+    width: 100%;
+    height: 180px;
+    margin-top: 30px;
+    list-style: none;
+    overflow-y: auto;
+}
+#app_taskList::-webkit-scrollbar {
+    width: 3.5px;
+}
+#app_taskList::-webkit-scrollbar-thumb {
+    background-color: rgb(36, 36, 36);
+  }
+  
+#app_taskList::-webkit-scrollbar-track {
+    background-color: rgb(210, 210, 210);
+  }
+#app_taskList li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    border-top: none;
+    border-left: 4px solid red;
+    border-right: none;
+    border-bottom: none;
+    background-color: rgb(17, 24, 39);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 10px 12px;
+    box-shadow: inset -5px -5px 10px #2f3033, inset 5px 5px 10px #131212;
+    margin-bottom: 12px;
+
+}
+#app_taskList li.done{
+    border-left: 4px solid green;
+}
+.nameTask{
+    width: 60%;
+}
+.Task_tool{
+    width: 40%;
+    display: flex;
+    justify-content: end;
+}
+.Task_tool i{
+    font-size: large;
+    margin-left: 10px;
+}
+.Task_tool i:hover{
+    cursor: pointer;
+}
+
+.app_edit{
+    background-color: rgb(17, 24, 39);
+    width: 400px;
+    height: 100%;
+    display: none;
+    color: rgb(182, 181, 181);
+    padding: 40px 25px;
+    /* border-top-right-radius: 15px; 
+    border-bottom-right-radius: 15px;  */
+    position: fixed;
+    left: 0px;
+    animation: moveIn 0.5s ease-in-out;
+}
+@keyframes moveIn {
+    0% {
+      left: -400px;
+      opacity: 0;
+    }
+    100% {
+        left: 0px;
+        opacity: 1;
+    }
+  }
+
+
+.app_edit.display{
+    display: block;
+}
+
+
+.app_edit--name {
+    width: 100%;
+    height: 50px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #D000F7;
+    background-color: rgb(17, 24, 39);
+    box-shadow: inset -5px -5px 10px #1e1e1f, inset 5px 5px 10px #131212;
+    font-weight: 500;
+    padding-left: 20px;
+    color: rgb(182, 181, 181);
+    font-size: 19px;
+    outline: none;
+    margin-top: 14px;
+    margin-bottom: 18px;
+}
+
+.close{
+    border-radius: 50%;
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    border: none;
+    background-color: transparent;
+    color: rgb(182, 181, 181);
+    font-size: x-large;
+    width: 40px;
+    height: 40px;
+    transition: 0.3s;
+}
+.close:hover{
+    background: linear-gradient(-45deg, #D000F7, #24BAE3);
+    color: white;
+    cursor: pointer;
+
+}
+.app_edit--save{
+    background: linear-gradient(-45deg, #D000F7, #24BAE3);
+    box-shadow: 1.5px 4px 10px rgba(208, 0, 247, 0.7);
+    transition: 0.3s;
+    width: 100px;
+    color: white;
+    border: none;
+    border-radius: 2px;
+    height: 35px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.app_edit--save:hover{
+    background: linear-gradient(-45deg, #dc44f7, #54c1df);
+    box-shadow: 1.5px 4px 10px rgba(222, 99, 244, 0.7);
+    cursor: pointer;
+}
+.app_moreactions{
+    background-color: rgb(17, 24, 39);
+    box-shadow: inset -5px -5px 10px #1e1e1f, inset 5px 5px 10px #131212;
+    transition: 0.3s;
+    width: 140px;
+    color: rgb(182, 181, 181);
+    border: none;
+    border-radius: 2px;
+    height: 35px;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-left: 12px;
+}
+#app_main{
+    margin-top: 40px;
+}
+#main_header{
+    list-style: none;
+    border-bottom: 1px solid rgb(182, 181, 181) ;
+    height: 34px;
+    display: flex;
+}
+#main_header li{
+    width: 30%;
+    border-bottom: 2px solid #dc44f7;
+    display: flex;
+    justify-content: center;
+    color: transparent;
+    background: linear-gradient(-45deg, rgb(208, 0, 247), rgb(36, 186, 227)) text; 
+}
+#location{
+    margin-top: 18px;
+    width: 100%;
+    height:35px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+#location input{
+    width: 100%;
+    height: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #D000F7;
+    background-color: rgb(17, 24, 39);
+    box-shadow: inset -5px -5px 10px #1e1e1f, inset 5px 5px 10px #131212;
+    padding-left: 8px;
+}
+#location i{
+    margin-right: 12px;
+    font-size: large;
+}
+#work{
+    margin-top: 18px;
+    width: 100%;
+    height:35px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+#work i{
+    margin-right: 12px;
+    font-size: large;
+}
+#work select{
+    width: 130px;
+    color: rgb(182, 181, 181);
+    height: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #D000F7;
+    background-color: rgb(17, 24, 39);
+    box-shadow: inset -5px -5px 10px #1e1e1f, inset 5px 5px 10px #131212;
+    padding-left: 8px;
+    margin-right: 8px;
+}
+#task_status{
+    margin-top: 18px;
+    width: 100%;
+    height:20px;
+    display: flex;
+    align-items: center;
+}
+#task_status i{
+    margin-right: 12px;
+    font-size: medium;
+    margin-bottom: 3px;
+}
+#task_status h1{
+    font-size: large;
+    font-weight: 600;
+    margin-right: 12px;
+}
+#task_status input{
+    width: 15px;
+    height: 15px;
+}
+
+#app_des-title{
+    margin-top: 10px;
+    width: 100%;
+    height:35px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#app_des-title h1{
+    font-size: larger;
+    font-weight: 600;
+    margin-left: 12px;
+}
+#des_tool{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #D000F7;
+    background-color: rgb(17, 24, 39);
+    box-shadow: inset -5px -5px 10px #1e1e1f, inset 5px 5px 10px #131212;
+    height: 230px;
+    padding-top: 5px;
+}
+#des_tool textarea{
+    outline: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(17, 24, 39);
+    color: rgb(182, 181, 181);
+    border: none;
+    border-bottom: 1px solid #D000F7;
+    padding: 0 12px;
+
+}
+#des_tool-header{
+    margin: 10px 12px;
+    
+}
+#des_tool-header i{
+    margin-left: 5px;
+}
+#des_tool-header{
+    display: flex;
+}
+#des_tool-header div{
+    margin-right: 6px;
+    }
+    
