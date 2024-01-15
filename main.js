@@ -8,7 +8,10 @@ let btnAll = $('#All')
 let btnDone = $('#Done')
 let btnUndone = $('#Undone')
 let tabs = $$('.menu_tool--item')
+let formEdit = $('.app_edit')
 let arrTemp = []
+
+
 
 let count = 4
 
@@ -37,6 +40,7 @@ let todoList = [{
 
 
 let addEventHandle = (e) => {
+    e.stopPropagation();
     count = count + 1
     let newItem = {
         id: count,
@@ -58,7 +62,8 @@ let saveTabbedArray = (status) => {
 btnAdd.addEventListener('click', addEventHandle)
 
 tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (e) => {
+        e.stopPropagation();
         $('.menu_tool--item.active').classList.remove('active')
         tab.classList.add('active')
         switch(index){
@@ -75,8 +80,9 @@ tabs.forEach((tab, index) => {
     })
 })
 
+
+
 function Render(arrList) {
-    console.log(arrList)
     listTask.innerHTML = arrList.map((item) => {
         if(item.done == true){
             return `
@@ -105,7 +111,6 @@ function Render(arrList) {
     items.forEach((element,index) => {
         let btnTrash = element.querySelector('.trash')
         let btnEdit = element.querySelector('.edit')
-        let formEdit = $('.app_edit')
         let btnDone = $('#Done')
         let btnUnDone = $('#Undone')
         let formEdit_nameTask = $('.app_edit--name')
@@ -121,7 +126,8 @@ function Render(arrList) {
             })
 
         }
-        let TrashHandle = () => {
+        let TrashHandle = (e) => {
+            e.stopPropagation();
             resetMainList(arrList[index].id)
             if(arrList !== todoList){
                 arrList.splice(index, 1)
@@ -131,62 +137,63 @@ function Render(arrList) {
         }
 
         btnTrash.addEventListener('click', TrashHandle) 
-        let EditHandle = (event) => {
-            event.stopPropagation();
-            let btnSaveHandler = () => {
-                arrList[index].name = formEdit_nameTask.value;
-                arrList[index].done = formEdit_status.checked;
-                formEdit.classList.remove('display');
-                formApp.classList.remove('test');
-                if (btnUnDone.classList.contains("active")) {
-                    saveTabbedArray(false);
-                } else if (btnDone.classList.contains("active")) {
-                    saveTabbedArray(true);
-                } else {
-                    Render(todoList);
+        let EditHandle = (e) => {
+            e.stopPropagation();
+
+            formEdit_btnsave.onclick = function(e) {
+                e.stopPropagation();
+                arrList[index].name = formEdit_nameTask.value
+                arrList[index].done = formEdit_status.checked
+                formEdit.classList.remove('display')
+                formApp.classList.remove('test')
+                if(btnUnDone.classList.contains("active")){
+                    saveTabbedArray(false)
+
                 }
-                formEdit_btnsave.removeEventListener('click', btnSaveHandler);
-            };
-        
-            let btnCloseHandler = () => {
-                formEdit.classList.remove('display');
-                formApp.classList.remove('test');
-                Render(arrList);
-                formEdit_close.removeEventListener('click', btnCloseHandler);
-                formEdit_btnsave.removeEventListener('click', btnSaveHandler); 
-            };
+                else if(btnDone.classList.contains("active")){
+                    saveTabbedArray(true)
+                }
+                else {
+                    Render(todoList)
+                }
+            }
 
-            
-
-            
-        
-            formEdit_close.addEventListener('click', btnCloseHandler);
-            formEdit_btnsave.addEventListener('click', btnSaveHandler);
-        
+            formEdit_close.onclick = (e) => {
+                e.stopPropagation();
+                formEdit.classList.remove('display')
+                formApp.classList.remove('test')
+                Render(arrList)
+            }
             formEdit.classList.add('display');
-            formApp.classList.add('test');
+            formApp.classList.add('test')
             formEdit_nameTask.value = arrList[index].name;
             formEdit_status.checked = arrList[index].done;
 
-            let outsideClickHandler = (event) => {
-                if (!formEdit.contains(event.target)) {
-                    formEdit.classList.remove('display');
-                    formApp.classList.remove('test');
-                    Render(arrList);
-                    btnEdit.removeEventListener('click', EditHandle);
-                    document.removeEventListener('mousedown', outsideClickHandler);
-                    formEdit_close.removeEventListener('click', btnCloseHandler);
-                    formEdit_btnsave.removeEventListener('click', btnSaveHandler);
+
+            if(formEdit.classList.contains('display')) {
+                console.log("có")
+                document.onclick = (e) => {
+                    if (!formEdit.contains(e.target)) {
+                        formEdit.classList.remove('display');
+                        formApp.classList.remove('test');
+                        Render(arrList);
+                    }
                 }
-            };
-            document.addEventListener('click', outsideClickHandler);
-        };
-        btnEdit.addEventListener('click', EditHandle);
-          
+            }
 
+        }     
+        btnEdit.addEventListener('click', EditHandle); 
+              
+})
 
-});
+if(!formEdit.classList.contains('display')) {
+    console.log("không")
+    document.onclick = (e) => {
+    }
 }
+}
+
+
 
 Render(todoList)
 
